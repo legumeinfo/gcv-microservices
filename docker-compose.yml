@@ -9,7 +9,8 @@ services:
   chromosome:
     build: chromosome
     depends_on:
-      - redisearch
+      redisearch:
+        condition: service_healthy
     environment:
       HTTP_HOST: "0.0.0.0"
       REDIS_HOST: redisearch
@@ -24,7 +25,8 @@ services:
   chromosome_search:
     build: chromosome_search
     depends_on:
-      - redisearch
+      redisearch:
+        condition: service_healthy
     environment:
       HTTP_HOST: "0.0.0.0"
       REDIS_HOST: redisearch
@@ -39,7 +41,8 @@ services:
   chromosome_region:
     build: chromosome_region
     depends_on:
-      - redisearch
+      redisearch:
+        condition: service_healthy
     environment:
       HTTP_HOST: "0.0.0.0"
       REDIS_HOST: redisearch
@@ -54,7 +57,8 @@ services:
   genes:
     build: genes
     depends_on:
-      - redisearch
+      redisearch:
+        condition: service_healthy
     environment:
       HTTP_HOST: "0.0.0.0"
       REDIS_HOST: redisearch
@@ -69,7 +73,8 @@ services:
   gene_search:
     build: gene_search
     depends_on:
-      - redisearch
+      redisearch:
+        condition: service_healthy
     environment:
       HTTP_HOST: "0.0.0.0"
       REDIS_HOST: redisearch
@@ -84,7 +89,8 @@ services:
   macro_synteny_blocks:
     build: macro_synteny_blocks
     depends_on:
-      - redisearch
+      redisearch:
+        condition: service_healthy
     environment:
       HTTP_HOST: "0.0.0.0"
       REDIS_HOST: redisearch
@@ -100,7 +106,8 @@ services:
   micro_synteny_search:
     build: micro_synteny_search
     depends_on:
-      - redisearch
+      redisearch:
+        condition: service_healthy
     environment:
       HTTP_HOST: "0.0.0.0"
       REDIS_HOST: redisearch
@@ -115,7 +122,8 @@ services:
   pairwise_macro_synteny_blocks:
     build: pairwise_macro_synteny_blocks
     depends_on:
-      - redisearch
+      redisearch:
+        condition: service_healthy
     environment:
       HTTP_HOST: "0.0.0.0"
       REDIS_HOST: redisearch
