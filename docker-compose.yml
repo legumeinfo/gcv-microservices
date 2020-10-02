@@ -97,8 +97,8 @@ services:
       - "8080"
       - "8081"
 
-  micro_synteny_blocks:
-    build: micro_synteny_blocks
+  micro_synteny_search:
+    build: micro_synteny_search
     depends_on:
       - redisearch
     environment:
