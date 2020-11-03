@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# sample script to load several genomes into Redis
+#
+# usage: gff_to_redisearch.py [-h] [--genus GENUS] [--species SPECIES] [--strain STRAIN] [--gffgene GFFGENE] [--gffchr GFFCHR] [--gfa GFA] [--rdb RDB] [--rpassword RPASSWORD] [--rhost RHOST] [--rport RPORT]
+#                            [--rchunksize RCHUNKSIZE] [--no-reload] [--no-save] [--extend]
+#
+# NOTE: you must gunzip the files under LIS before running this script
+#
+# LIS
+# ├── Glycine_max
+# │   ├── Wm82.gnm2.ann1.RVB6
+# │   │   ├── glyma.Wm82.gnm2.ann1.RVB6.gene_models_main.gff3
+# │   │   └── glyma.Wm82.gnm2.ann1.RVB6.legfed_v1_0.M65K.gfa.tsv
+# │   └── Wm82.gnm2.DTC4
+# │       └── glyma.Wm82.gnm2.DTC4.genome_main.gff3
+# ├── Medicago_truncatula
+# │   ├── A17_HM341.gnm4.2GZ9
+# │   │   └── medtr.A17_HM341.gnm4.2GZ9.genome_main.gff3
+# │   └── A17_HM341.gnm4.ann2.G3ZY
+# │       ├── medtr.A17_HM341.gnm4.ann2.G3ZY.gene_models_main.gff3
+# │       └── medtr.A17_HM341.gnm4.ann2.G3ZY.legfed_v1_0.M65K.gfa.tsv
+# └── Phaseolus_vulgaris
+#     ├── G19833.gnm2.ann1.PB8d
+#     │   ├── phavu.G19833.gnm2.ann1.PB8d.gene_models_main.gff3
+#     │   └── phavu.G19833.gnm2.ann1.PB8d.legfed_v1_0.M65K.gfa.tsv
+#     └── G19833.gnm2.fC0g
+#         └── phavu.G19833.gnm2.fC0g.genome_main.gff3
+
+## glyma.Wm82.gnm2.ann1 -- clears database first (no --extend flag)
+./gff_to_redisearch.py --genus Glycine --species max --strain Wm82 \
+                       --gffchr  LIS/Glycine_max/Wm82.gnm2.DTC4/glyma.Wm82.gnm2.DTC4.genome_main.gff3 \
+                       --gffgene LIS/Glycine_max/Wm82.gnm2.ann1.RVB6/glyma.Wm82.gnm2.ann1.RVB6.gene_models_main.gff3 \
+                       --gfa     LIS/Glycine_max/Wm82.gnm2.ann1.RVB6/glyma.Wm82.gnm2.ann1.RVB6.legfed_v1_0.M65K.gfa.tsv
+
+## medtr.A17_HM341.gnm4.ann2 -- extends database with --extend
+./gff_to_redisearch.py --extend --genus Medicago --species truncatula --strain A17_HM341 \
+                       --gffchr  LIS/Medicago_truncatula/A17_HM341.gnm4.2GZ9/medtr.A17_HM341.gnm4.2GZ9.genome_main.gff3 \
+                       --gffgene LIS/Medicago_truncatula/A17_HM341.gnm4.ann2.G3ZY/medtr.A17_HM341.gnm4.ann2.G3ZY.gene_models_main.gff3 \
+                       --gfa     LIS/Medicago_truncatula/A17_HM341.gnm4.ann2.G3ZY/medtr.A17_HM341.gnm4.ann2.G3ZY.legfed_v1_0.M65K.gfa.tsv
+
+## phavu.G19833.gnm2.ann1 -- extends database with --extend
+./gff_to_redisearch.py --extend --genus Phaseolus --species vulgaris --strain G19833 \
+                       --gffchr  LIS/Phaseolus_vulgaris/G19833.gnm2.fC0g/phavu.G19833.gnm2.fC0g.genome_main.gff3 \
+                       --gffgene LIS/Phaseolus_vulgaris/G19833.gnm2.ann1.PB8d/phavu.G19833.gnm2.ann1.PB8d.gene_models_main.gff3 \
+                       --gfa     LIS/Phaseolus_vulgaris/G19833.gnm2.ann1.PB8d/phavu.G19833.gnm2.ann1.PB8d.legfed_v1_0.M65K.gfa.tsv
+
+
